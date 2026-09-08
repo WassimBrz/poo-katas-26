@@ -1,0 +1,33 @@
+{
+    "name": "opmvpc/poo-katas-26",
+    "description": "Les katas POO du cours 5XCOS : le Donjon, niveau par niveau.",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.3"
+    },
+    "require-dev": {
+        "pestphp/pest": "^3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dungeon\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "pest"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
