@@ -16,7 +16,7 @@ exactement ce qu'on attend.
 | 1 | 1 — Objets et classes | `Dice`, `Hero` | classe, `new`, `$this`, constructeur avec promotion, `readonly`, visibilité, `__toString()`, méthode `static` |
 | 2 | 4 — Relations entre objets | `Item`, `Inventory`, `Hero::inventory()` | propriété typée par une classe, tableau d'objets, composition (le sac est créé dans le constructeur du héros) |
 | 3 | 5 — Héritage et polymorphisme | `Weapon`, `Potion`, `Monster`, `Goblin`, `Dragon`, `InventoryFullException`, `Hero::equip()`, `Hero::drink()` | `extends`, `abstract`, `parent::__construct()`, redéfinition, `?Weapon`, exceptions personnalisées |
-| 4 | 6 — Contrats | `Rarity`, `Fighter`, `HasHealth`, `Item implements Stringable`, `Inventory implements Countable, IteratorAggregate` | enum, interface, trait, interfaces natives de PHP |
+| 4 | 6 — Contrats | `Rarity`, `Fighter`, **extraire le trait `HasHealth`** (déplacer `hp`, `maxHp`, `takeDamage()`, `heal()`, `isAlive()` hors de `Hero` et `Monster`), `Item implements Stringable`, `Inventory implements Countable, IteratorAggregate` | enum, interface, trait, interfaces natives de PHP |
 | 5 (bonus) | 6 — Contrats | `Battle` | typer par une interface, recevoir une dépendance au lieu de la fabriquer |
 
 ## La procédure, pas à pas
@@ -76,7 +76,7 @@ public function roll(): int
 Ne changez pas les signatures (noms, types, paramètres) : les tests s'appuient
 dessus. Vous pouvez en revanche ajouter des méthodes privées si ça vous aide.
 
-## Deux détails qui surprennent (et qui sont voulus)
+## Trois détails qui surprennent (et qui sont voulus)
 
 **1. `Item` est déjà abstraite, dès le niveau 2.** Le repo ne contient qu'un seul
 `src/`, celui de l'état final. Or au chapitre 5, `Item` devient abstraite : on ne
@@ -91,6 +91,14 @@ remplace ça par `throw new InventoryFullException(...)`. Le test du niveau 2 es
 écrit pour accepter **les deux** comportements — il vérifie surtout que le sac
 reste vide. Le test du niveau 3, lui, exige l'exception. Vous ne cassez donc rien
 en faisant l'évolution demandée.
+
+**3. `hp` et `maxHp` sont écrits deux fois, dans `Hero` et dans `Monster`.** C'est
+voulu, et c'est même le sujet d'un exercice : au niveau 1 vous écrivez le code des
+points de vie dans `Hero`, au niveau 3 vous le réécrivez dans `Monster`, et au
+niveau 4 vous en avez assez — vous le déplacez une bonne fois dans le trait
+`src/HasHealth.php` (livré vide) et vous mettez `use HasHealth;` dans les deux
+classes. La duplication d'abord, le trait ensuite : sinon le trait ne règle aucun
+problème que vous auriez vraiment rencontré.
 
 ## Ce qui est dans le dossier
 
