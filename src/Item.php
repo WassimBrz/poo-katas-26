@@ -10,29 +10,15 @@ namespace Dungeon;
  */
 abstract class Item implements \Stringable
 {
-    // protected : les sous-classes (Weapon, Potion) y ont accès, l'extérieur non.
+    /**
+     * Nom, poids et rareté sont fixés à la création : readonly, lisibles par tout le monde.
+     * Doit refuser un poids négatif : InvalidArgumentException("Un poids n'est pas négatif, $weight reçu.").
+     */
     public function __construct(
-        protected readonly string $name,
-        protected readonly float $weight,
-        protected readonly Rarity $rarity = Rarity::Common,
+        public readonly string $name,
+        public readonly float $weight,
+        public readonly Rarity $rarity = Rarity::Common,
     ) {
-    }
-
-    /** Doit renvoyer le nom de l'objet. */
-    public function name(): string
-    {
-        throw new \LogicException('À implémenter');
-    }
-
-    /** Doit renvoyer le poids en kilos. */
-    public function weight(): float
-    {
-        throw new \LogicException('À implémenter');
-    }
-
-    /** Doit renvoyer la rareté (Rarity::Common par défaut). Niveau 4. */
-    public function rarity(): Rarity
-    {
         throw new \LogicException('À implémenter');
     }
 

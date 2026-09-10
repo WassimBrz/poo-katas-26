@@ -14,7 +14,7 @@ use Dungeon\Potion;
 use Dungeon\Rarity;
 use Dungeon\Weapon;
 
-// Niveau 4 — chapitre 6 : enum, interface, trait, interfaces natives de PHP.
+// Niveau 4 — chapitre 7 : enum, interface, trait, interfaces natives de PHP.
 
 test('l\'enum Rarity a ses trois cas', function (): void {
     expect(Rarity::cases())->toHaveCount(3);
@@ -34,7 +34,7 @@ test('chaque rareté a son multiplicateur et son libellé', function (): void {
 })->group('niveau-4');
 
 test('un objet est commun par défaut', function (): void {
-    expect((new Weapon('Épée courte', 2.0, 5))->rarity())->toBe(Rarity::Common);
+    expect((new Weapon('Épée courte', 2.0, 5))->rarity)->toBe(Rarity::Common);
 })->group('niveau-4');
 
 test('la valeur d\'un objet vaut son poids fois le multiplicateur de rareté', function (): void {
@@ -80,8 +80,8 @@ test('le trait donne exactement le même comportement aux deux classes', functio
     $hero->takeDamage(100);
     $goblin->takeDamage(100);
 
-    expect($hero->hp())->toBe(0);
-    expect($goblin->hp())->toBe(0);
+    expect($hero->hp)->toBe(0);
+    expect($goblin->hp)->toBe(0);
     expect($hero->isAlive())->toBeFalse();
     expect($goblin->isAlive())->toBeFalse();
 })->group('niveau-4');
@@ -105,7 +105,7 @@ test('on parcourt l\'inventaire avec foreach', function (): void {
     $names = [];
     foreach ($bag as $item) {
         expect($item)->toBeInstanceOf(Item::class);
-        $names[] = $item->name();
+        $names[] = $item->name;
     }
 
     expect($names)->toBe(['Épée courte', 'Potion de soin']);

@@ -9,8 +9,8 @@ use Dungeon\Hero;
 use Dungeon\Weapon;
 use Tests\Support\FixedDice;
 
-// Bonus niveau 5 — le combat. Le dé est donné au Battle au lieu d'être
-// fabriqué dedans : c'est ce qui rend le résultat reproductible dans un test.
+// Bonus niveau 5 — chapitre 7 : le combat. Le dé est donné au Battle au lieu
+// d'être fabriqué dedans : c'est ce qui rend le résultat reproductible dans un test.
 
 test('le dé truqué déroule toujours la même série', function (): void {
     $dice = new FixedDice([1, 3]);
@@ -28,7 +28,7 @@ test('un héros solide vient à bout d\'un gobelin', function (): void {
 
     expect($winner)->toBe($hero);
     expect($goblin->isAlive())->toBeFalse();
-    expect($hero->hp())->toBe(17);
+    expect($hero->hp)->toBe(17);
 })->group('niveau-5');
 
 test('un héros trop faible perd contre le dragon', function (): void {

@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Dungeon;
 
-/** Un dé à N faces. Niveau 1. */
+/** Un dé à N faces. Niveau 1, complété au chapitre Encapsulation. */
 class Dice
 {
-    // Le nombre de faces, fixé à la création et jamais modifié.
+    /**
+     * Le nombre de faces, fixé à la création et jamais modifié : readonly.
+     * Chapitre Encapsulation : le constructeur doit refuser moins de 2 faces en
+     * levant InvalidArgumentException("Un dé a au moins 2 faces, $sides reçu.").
+     */
     public function __construct(
         public readonly int $sides,
     ) {

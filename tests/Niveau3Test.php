@@ -12,7 +12,7 @@ use Dungeon\Monster;
 use Dungeon\Potion;
 use Dungeon\Weapon;
 
-// Niveau 3 — chapitre 5 : héritage, classes abstraites, polymorphisme, exceptions.
+// Niveau 3 — chapitre 6 : héritage, classes abstraites, polymorphisme, exceptions.
 
 test('Item est une classe abstraite : on ne peut pas l\'instancier', function (): void {
     expect((new ReflectionClass(Item::class))->isAbstract())->toBeTrue();
@@ -22,16 +22,16 @@ test('une arme est un Item avec des dégâts', function (): void {
     $sword = new Weapon('Épée courte', 2.0, 5);
 
     expect($sword)->toBeInstanceOf(Item::class);
-    expect($sword->name())->toBe('Épée courte');
-    expect($sword->weight())->toBe(2.0);
-    expect($sword->damage())->toBe(5);
+    expect($sword->name)->toBe('Épée courte');
+    expect($sword->weight)->toBe(2.0);
+    expect($sword->damage)->toBe(5);
 })->group('niveau-3');
 
 test('une potion est un Item qui soigne', function (): void {
     $potion = new Potion('Potion de soin', 0.5, 5);
 
     expect($potion)->toBeInstanceOf(Item::class);
-    expect($potion->healing())->toBe(5);
+    expect($potion->healing)->toBe(5);
 })->group('niveau-3');
 
 test('chaque type d\'objet se décrit à sa façon (polymorphisme)', function (): void {
@@ -56,13 +56,13 @@ test('un monstre a un nom et des points de vie', function (): void {
     $goblin = new Goblin();
 
     expect($goblin->name)->toBe('Gobelin');
-    expect($goblin->hp())->toBe(5);
-    expect($goblin->maxHp())->toBe(5);
+    expect($goblin->hp)->toBe(5);
+    expect($goblin->maxHp)->toBe(5);
     expect((string) $goblin)->toBe('Gobelin (5/5 PV)');
 
     $dragon = new Dragon();
     expect($dragon->name)->toBe('Dragon');
-    expect($dragon->hp())->toBe(30);
+    expect($dragon->hp)->toBe(30);
 })->group('niveau-3');
 
 test('on parcourt une liste de monstres sans un seul if', function (): void {
@@ -80,11 +80,11 @@ test('un monstre encaisse des dégâts et finit par mourir', function (): void {
     $goblin = new Goblin();
 
     $goblin->takeDamage(3);
-    expect($goblin->hp())->toBe(2);
+    expect($goblin->hp)->toBe(2);
     expect($goblin->isAlive())->toBeTrue();
 
     $goblin->takeDamage(99);
-    expect($goblin->hp())->toBe(0);
+    expect($goblin->hp)->toBe(0);
     expect($goblin->isAlive())->toBeFalse();
 })->group('niveau-3');
 
@@ -104,22 +104,22 @@ test('le héros équipe une arme et frappe plus fort', function (): void {
     $hero = new Hero('Arthur', 10, 2);
 
     expect($hero->attack())->toBe(2);
-    expect($hero->weapon())->toBeNull();
+    expect($hero->weapon)->toBeNull();
 
     $hero->equip(new Weapon('Épée courte', 2.0, 5));
 
-    expect($hero->weapon())->toBeInstanceOf(Weapon::class);
+    expect($hero->weapon)->toBeInstanceOf(Weapon::class);
     expect($hero->attack())->toBe(7);
 })->group('niveau-3');
 
 test('boire une potion soigne le héros et retire la potion du sac', function (): void {
     $hero = new Hero('Arthur');
     $potion = new Potion('Potion de soin', 0.5, 5);
-    $hero->inventory()->add($potion);
+    $hero->inventory->add($potion);
     $hero->takeDamage(6);
 
     $hero->drink($potion);
 
-    expect($hero->hp())->toBe(9);
-    expect($hero->inventory()->has('Potion de soin'))->toBeFalse();
+    expect($hero->hp)->toBe(9);
+    expect($hero->inventory->has('Potion de soin'))->toBeFalse();
 })->group('niveau-3');

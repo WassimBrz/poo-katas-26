@@ -6,15 +6,19 @@ use Dungeon\Hero;
 use Dungeon\Inventory;
 use Tests\Support\SimpleItem;
 
-// Niveau 2 — chapitre 4 : un objet en possède d'autres (Hero → Inventory → Item).
+// Niveau 2 — chapitre 5 : un objet en possède d'autres (Hero → Inventory → Item).
 // `Item` devenant abstraite au niveau 3, ces tests passent par SimpleItem,
 // une sous-classe concrète définie dans tests/Support/.
 
 test('un objet a un nom et un poids', function (): void {
     $item = new SimpleItem('Épée courte', 2.0);
 
-    expect($item->name())->toBe('Épée courte');
-    expect($item->weight())->toBe(2.0);
+    expect($item->name)->toBe('Épée courte');
+    expect($item->weight)->toBe(2.0);
+})->group('niveau-2');
+
+test('un poids négatif est refusé', function (): void {
+    expect(fn () => new SimpleItem('Plume', -1.0))->toThrow(InvalidArgumentException::class);
 })->group('niveau-2');
 
 test('un sac neuf est vide et porte 20 kg par défaut', function (): void {
@@ -22,7 +26,7 @@ test('un sac neuf est vide et porte 20 kg par défaut', function (): void {
 
     expect($bag->count())->toBe(0);
     expect($bag->totalWeight())->toBe(0.0);
-    expect($bag->maxWeight())->toBe(20.0);
+    expect($bag->maxWeight)->toBe(20.0);
 })->group('niveau-2');
 
 test('on ajoute un objet dans le sac et on l\'y retrouve', function (): void {
@@ -81,16 +85,16 @@ test('retirer un objet absent ne casse rien', function (): void {
 test('le héros possède un inventaire créé dans son constructeur', function (): void {
     $hero = new Hero('Arthur');
 
-    expect($hero->inventory())->toBeInstanceOf(Inventory::class);
-    expect($hero->inventory()->count())->toBe(0);
+    expect($hero->inventory)->toBeInstanceOf(Inventory::class);
+    expect($hero->inventory->count())->toBe(0);
 })->group('niveau-2');
 
 test('deux héros ont chacun leur propre sac', function (): void {
     $arthur = new Hero('Arthur');
     $morgane = new Hero('Morgane');
 
-    $arthur->inventory()->add(new SimpleItem('Épée courte', 2.0));
+    $arthur->inventory->add(new SimpleItem('Épée courte', 2.0));
 
-    expect($arthur->inventory()->count())->toBe(1);
-    expect($morgane->inventory()->count())->toBe(0);
+    expect($arthur->inventory->count())->toBe(1);
+    expect($morgane->inventory->count())->toBe(0);
 })->group('niveau-2');

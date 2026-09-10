@@ -5,41 +5,49 @@ declare(strict_types=1);
 namespace Dungeon;
 
 /**
- * Le personnage joueur. Niveau 1, complété aux niveaux 2, 3 et 4.
+ * Le personnage joueur. Niveau 1, complété au chapitre Encapsulation puis aux niveaux 2, 3 et 4.
  * Fighter (niveau 4) : le contrat commun avec les monstres.
+ *
+ * Pas de getter ici : les propriétés se lisent directement ($hero->hp). Ce qui
+ * empêche l'extérieur de les écrire, c'est `private(set)` (ou `readonly`).
  */
 final class Hero implements Fighter
 {
-    /** Les points de vie courants, toujours entre 0 et $maxHp. Niveau 1. */
-    protected int $hp = 0;
+    /** Le maximum de points de vie. Lecture publique, écriture réservée à la classe. Niveau 1. */
+    public private(set) int $maxHp = 0;
 
-    /** Le maximum de points de vie. Niveau 1. */
-    protected int $maxHp = 0;
+    /**
+     * Les points de vie courants. Lecture publique, écriture réservée à la classe. Niveau 1.
+     * Chapitre Encapsulation : ajouter un hook `set` qui borne la valeur entre 0 et $maxHp,
+     * pour que takeDamage() et heal() n'aient plus à s'en soucier.
+     */
+    public private(set) int $hp = 0;
 
-    /** Le sac, créé dans le constructeur : composition. Niveau 2. */
-    private Inventory $inventory;
+    /**
+     * Propriété virtuelle (hook `get`, rien n'est stocké) : doit valoir true quand
+     * hp est égal à maxHp. Chapitre Encapsulation.
+     */
+    public bool $isFullHealth {
+        get => throw new \LogicException('À implémenter');
+    }
 
-    /** L'arme équipée, ou null si le héros se bat à mains nues. Niveau 3. */
-    private ?Weapon $weapon = null;
+    /** Le sac, créé dans le constructeur : composition. Jamais remplacé, donc readonly. Niveau 2. */
+    public readonly Inventory $inventory;
 
-    /** Doit initialiser hp et maxHp, et créer l'inventaire du héros. */
+    /** L'arme équipée, ou null si le héros se bat à mains nues. Écrite par equip() seulement. Niveau 3. */
+    public private(set) ?Weapon $weapon = null;
+
+    /**
+     * Doit initialiser maxHp et hp, et créer l'inventaire du héros (niveau 2).
+     * Chapitre Encapsulation : doit d'abord refuser un nom vide
+     * (InvalidArgumentException('Un héros a un nom.')) et un maxHp inférieur à 1
+     * (InvalidArgumentException("maxHp doit valoir au moins 1, $maxHp reçu.")).
+     */
     public function __construct(
         public readonly string $name,
         int $maxHp = 10,
         public readonly int $strength = 2,
     ) {
-        throw new \LogicException('À implémenter');
-    }
-
-    /** Doit renvoyer les points de vie courants. */
-    public function hp(): int
-    {
-        throw new \LogicException('À implémenter');
-    }
-
-    /** Doit renvoyer le maximum de points de vie. */
-    public function maxHp(): int
-    {
         throw new \LogicException('À implémenter');
     }
 
@@ -61,20 +69,8 @@ final class Hero implements Fighter
         throw new \LogicException('À implémenter');
     }
 
-    /** Doit renvoyer l'inventaire du héros. Niveau 2. */
-    public function inventory(): Inventory
-    {
-        throw new \LogicException('À implémenter');
-    }
-
-    /** Doit équiper l'arme passée en paramètre. Niveau 3. */
+    /** Doit équiper l'arme passée en paramètre (elle remplace la précédente). Niveau 3. */
     public function equip(Weapon $weapon): void
-    {
-        throw new \LogicException('À implémenter');
-    }
-
-    /** Doit renvoyer l'arme équipée, ou null. Niveau 3. */
-    public function weapon(): ?Weapon
     {
         throw new \LogicException('À implémenter');
     }

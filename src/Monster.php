@@ -10,29 +10,22 @@ namespace Dungeon;
  */
 abstract class Monster implements Fighter
 {
-    /** Les points de vie courants, toujours entre 0 et $maxHp. */
-    protected int $hp = 0;
+    /** Le maximum de points de vie. Lecture publique, écriture réservée à la classe. */
+    public private(set) int $maxHp = 0;
 
-    /** Le maximum de points de vie. */
-    protected int $maxHp = 0;
+    /** Les points de vie courants. Doit porter le même hook `set` que dans Hero : borné entre 0 et $maxHp. */
+    public private(set) int $hp = 0;
 
-    /** Doit garder le nom et initialiser hp et maxHp à $maxHp. */
+    /** Propriété virtuelle : doit valoir true quand hp est égal à maxHp. */
+    public bool $isFullHealth {
+        get => throw new \LogicException('À implémenter');
+    }
+
+    /** Doit garder le nom et initialiser maxHp puis hp à $maxHp. */
     public function __construct(
         public readonly string $name,
         int $maxHp,
     ) {
-        throw new \LogicException('À implémenter');
-    }
-
-    /** Doit renvoyer les points de vie courants. */
-    public function hp(): int
-    {
-        throw new \LogicException('À implémenter');
-    }
-
-    /** Doit renvoyer le maximum de points de vie. */
-    public function maxHp(): int
-    {
         throw new \LogicException('À implémenter');
     }
 

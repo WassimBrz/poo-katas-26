@@ -15,15 +15,10 @@ final class Inventory implements \Countable, \IteratorAggregate
     /** @var Item[] Les objets transportés. */
     private array $items = [];
 
+    /** Le poids maximum transportable, fixé à la création : readonly. */
     public function __construct(
-        private readonly float $maxWeight = 20.0,
+        public readonly float $maxWeight = 20.0,
     ) {
-    }
-
-    /** Doit renvoyer le poids maximum transportable. */
-    public function maxWeight(): float
-    {
-        throw new \LogicException('À implémenter');
     }
 
     /**

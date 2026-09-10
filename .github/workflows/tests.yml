@@ -4,12 +4,12 @@ on: [push, pull_request]
 
 jobs:
   katas:
-    name: Niveau ${{ matrix.niveau }}
+    name: ${{ matrix.groupe }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        niveau: [1, 2, 3, 4, 5]
+        groupe: [niveau-1, encapsulation, niveau-2, niveau-3, niveau-4, niveau-5]
     steps:
       - uses: actions/checkout@v4
 
@@ -20,4 +20,4 @@ jobs:
 
       - run: composer install --no-interaction --prefer-dist --no-progress
 
-      - run: composer test -- --group=niveau-${{ matrix.niveau }}
+      - run: composer test -- --group=${{ matrix.groupe }}
