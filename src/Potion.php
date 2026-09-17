@@ -14,12 +14,12 @@ final class Potion extends Item
         public readonly int $healing,
         Rarity $rarity = Rarity::Common,
     ) {
-        throw new \LogicException('À implémenter');
+        parent::__construct($name, $weight);
     }
 
     /** Doit renvoyer : "Potion de soin : potion (0.5 kg, +5 PV)". */
     public function describe(): string
     {
-        throw new \LogicException('À implémenter');
+        return sprintf('"%s : potion (%s kg, +%d PV)".', $this->name, $this->weight, $this->healing)  ; 
     }
 }

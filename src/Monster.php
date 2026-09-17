@@ -26,25 +26,29 @@ abstract class Monster implements Fighter
         public readonly string $name,
         int $maxHp,
     ) {
-        throw new \LogicException('À implémenter');
+        if(trim($this->name) === ''){
+            throw new \InvalidArgumentException('Un monstre a un nom.');
+        }
+        $this->maxHp = $maxHp;
+        $this->hp = $maxHp;
     }
 
     /** Doit retirer $amount points de vie, sans jamais descendre sous 0. */
     public function takeDamage(int $amount): void
     {
-        throw new \LogicException('À implémenter');
+        $this->hp -= $amount;
     }
 
     /** Doit rendre $amount points de vie, sans jamais dépasser $maxHp. */
     public function heal(int $amount): void
     {
-        throw new \LogicException('À implémenter');
+        $this->hp += $amount;
     }
 
     /** Doit renvoyer true tant qu'il reste au moins 1 point de vie. */
     public function isAlive(): bool
     {
-        throw new \LogicException('À implémenter');
+        return $this->hp > 0;
     }
 
     /** Chaque monstre frappe à sa façon : c'est aux sous-classes de l'écrire. */
@@ -53,6 +57,6 @@ abstract class Monster implements Fighter
     /** Doit renvoyer "Gobelin (5/5 PV)". */
     public function __toString(): string
     {
-        throw new \LogicException('À implémenter');
+        return sprintf('%s (%d/%d PV)', $this->name, $this->hp, $this->maxHp);
     }
 }
