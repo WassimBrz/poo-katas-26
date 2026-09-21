@@ -27,7 +27,8 @@ abstract class Item implements \Stringable
     /** Doit renvoyer poids × multiplicateur de rareté (règle du jeu, arbitraire). Niveau 4. */
     public function value(): float
     {
-        throw new \LogicException('À implémenter');
+        return $this->weight * $this->rarity->multiplier();
+
     }
 
     /** Chaque type d'objet se décrit à sa façon : c'est aux sous-classes de l'écrire. */
@@ -36,6 +37,6 @@ abstract class Item implements \Stringable
     /** Doit renvoyer la même chose que describe() : c'est le contrat Stringable. Niveau 4. */
     public function __toString(): string
     {
-        throw new \LogicException('À implémenter');
+        return $this->describe();
     }
 }

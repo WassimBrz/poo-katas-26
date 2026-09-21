@@ -14,12 +14,12 @@ final class Potion extends Item
         public readonly int $healing,
         Rarity $rarity = Rarity::Common,
     ) {
-        parent::__construct($name, $weight);
+        parent::__construct($name, $weight, $rarity);
     }
 
     /** Doit renvoyer : "Potion de soin : potion (0.5 kg, +5 PV)". */
     public function describe(): string
     {
-        return sprintf('"%s : potion (%s kg, +%d PV)".', $this->name, $this->weight, $this->healing)  ; 
+        return sprintf('%s : potion (%s kg, +%d PV)', $this->name, $this->weight, $this->healing)  ; 
     }
 }

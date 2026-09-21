@@ -14,12 +14,12 @@ final class Weapon extends Item
         public readonly int $damage,
         Rarity $rarity = Rarity::Common,
     ) {
-        parent::__construct($name, $weight);
+        parent::__construct($name, $weight, $rarity);
     }
 
     /** Doit renvoyer : "Épée courte : arme (2 kg, 5 dégâts)". */
     public function describe(): string
     {
-        return sprintf('"%s : arme (%s kg, %d dégâts)".', $this->name, $this->weight, $this->damage);
+        return sprintf('%s : arme (%s kg, %d dégâts)', $this->name, $this->weight, $this->damage);
     }
 }

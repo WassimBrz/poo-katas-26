@@ -25,6 +25,20 @@ final class Battle
      */
     public function fight(): Fighter
     {
-        throw new \LogicException('À implémenter');
+        while($this->b->isAlive() && $this->a->isAlive()){
+            if($this->a->isAlive()){
+                $this->b->takeDamage($this->a->attack() + $this->dice->roll());
+            }
+            else {break;};
+            
+            if($this->b->isAlive()){
+                $this->a->takeDamage($this->b->attack() + $this->dice->roll());
+            }
+            else{break;};
+        };
+        if($this->a->isAlive()){
+            return $this->a;
+        }
+        else {return $this->b;};
     }
 }

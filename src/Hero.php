@@ -13,23 +13,22 @@ namespace Dungeon;
  */
 final class Hero implements Fighter
 {
+    use HasHealth;
     /** Le maximum de points de vie. Lecture publique, écriture réservée à la classe. Niveau 1. */
-    public private(set) int $maxHp;
+    
 
     /**
      * Les points de vie courants. Lecture publique, écriture réservée à la classe. Niveau 1.
      * Chapitre Encapsulation : ajouter un hook `set` qui borne la valeur entre 0 et $maxHp,
      * pour que takeDamage() et heal() n'aient plus à s'en soucier.
      */
-    public private(set) int $hp = 0 {
-        set => max(0, min($this->maxHp, $value));
-    }
+    
 
     /**
      * Propriété virtuelle (hook `get`, rien n'est stocké) : doit valoir true quand
      * hp est égal à maxHp. Chapitre Encapsulation.
      */
-    public bool $isFullHealth {
+    /*public bool $isFullHealth {
         get => $this->hp === $this->maxHp;
     }
 
@@ -62,19 +61,19 @@ final class Hero implements Fighter
     }
 
     /** Doit retirer $amount points de vie, sans jamais descendre sous 0. */
-    public function takeDamage(int $amount): void
+    /*public function takeDamage(int $amount): void
     {
         $this->hp -= $amount;
     }
 
     /** Doit rendre $amount points de vie, sans jamais dépasser $maxHp. */
-    public function heal(int $amount): void
+    /*public function heal(int $amount): void
     {
         $this->hp += $amount;
     }
 
     /** Doit renvoyer true tant qu'il reste au moins 1 point de vie. */
-    public function isAlive(): bool
+    /*public function isAlive(): bool
     {
         return $this->hp > 0;
     }
@@ -82,19 +81,20 @@ final class Hero implements Fighter
     /** Doit équiper l'arme passée en paramètre (elle remplace la précédente). Niveau 3. */
     public function equip(Weapon $weapon): void
     {
-        throw new \LogicException('À implémenter');
+        $this->weapon = $weapon;
     }
 
     /** Doit soigner le héros du montant de la potion, puis retirer la potion de l'inventaire. Niveau 3. */
     public function drink(Potion $potion): void
     {
-        throw new \LogicException('À implémenter');
+        $this->hp += ($potion->healing);
+        $this->inventory->remove($potion->name);
     }
 
     /** Doit renvoyer strength, plus les dégâts de l'arme équipée s'il y en a une. */
     public function attack(): int
     {
-        throw new \LogicException('À implémenter');
+        return $this->strength + ($this->weapon?->damage ?? 0);
     }
 
     /** Doit renvoyer "Arthur (7/10 PV)". */
